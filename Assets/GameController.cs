@@ -24,9 +24,9 @@ public class GameController : MonoBehaviour
         param = Kanji_Data.param;
         var SectionKanjis = param.GetRange(0,19); //出題範囲の漢字を選択
         
-        for (int i = 0; i<10; i++){
-            Debug.Log(SectionKanjis[i].kanji);
-        }
+        // for (int i = 0; i<10; i++){
+        //     Debug.Log(SectionKanjis[i].kanji);
+        // }
     }
 
 
