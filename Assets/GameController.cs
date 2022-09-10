@@ -21,6 +21,7 @@ public class GameController : MonoBehaviour
 
     [SerializeField, Range(0,39)]
     public int section_id; //セクションの番号
+
     List<int> question_numbers; //該当する漢字のIDリスト
 
     int kanji_start_id = 1;
