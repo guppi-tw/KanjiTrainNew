@@ -58,15 +58,15 @@ public class GameController : MonoBehaviour
     {
         QuestionKanjiUGUI.text = SectionKanjis[kanji_question_now].kanji;
 
-        if (Input.GetKey(KeyCode.Space)){
-            //Debug.Log(2323232);
+        // if (Input.GetKey(KeyCode.Space)){
+        //     //Debug.Log(2323232);
 
-            for (int i = 0; i < 10 ; i ++){
-                Debug.Log(SectionKanjis[i].kanji);
-                Debug.Log(SectionKanjis[i].choices);
-            }
+        //     for (int i = 0; i < 10 ; i ++){
+        //         Debug.Log(SectionKanjis[i].kanji);
+        //         Debug.Log(SectionKanjis[i].choices);
+        //     }
             
-        }
+        // }
     }
 
 
@@ -77,9 +77,14 @@ public class GameController : MonoBehaviour
         }else{
             SceneManager.LoadScene("ClearScene");
         }
-        Debug.Log(kanji_question_now);
+        //Debug.Log(kanji_question_now);
         
     }
 
 
+    public void toMainScene(){
+        SceneManager.LoadScene("MainScene");
+    }
+
 }
+
