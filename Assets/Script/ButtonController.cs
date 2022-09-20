@@ -12,4 +12,12 @@ public class ButtonController : MonoBehaviour
     public void toMain(){
         SceneManager.LoadScene("MainScene");
     }
+
+    public void toBouken(){
+        SceneManager.LoadScene("BoukenScene");
+    }
+
+    public void toGottenKanji(){
+        SceneManager.LoadScene("GottenKanjiScene");
+    }
 }

@@ -49,7 +49,8 @@ public class GameController : MonoBehaviour
         //Debug.Log(kanji_start_id);
         //Debug.Log(kanji_end_id);
 
-        Debug.Log(SectionKanjis.Count);
+        //Debug.Log(SectionKanjis.Count);
+        Debug.Log(StageButtonController.CHOSEN_STAGE_ID);
     }
 
 
