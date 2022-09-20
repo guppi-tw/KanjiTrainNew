@@ -26,53 +26,44 @@ public class GameController : MonoBehaviour
 
     int kanji_start_id = 1;
     int kanji_end_id;
-
     int kanji_question_now = 0;
     //基本的にセクションは20ごとに区切られる。
 
 
 
+    public GameObject ANSWER_ZONE; //回答用の処理を司る部分。レベルに応じて色々変える予定。
+    List<GameObject> AnswerCards12; //回答カードのリスト。1と2で用いる。
+
+
     void Start()
     {
+        section_id = StageButtonController.CHOSEN_STAGE_ID; //選んだセクションIDを代入
 
         kanji_start_id = (section_id) * 20;
         kanji_end_id = (kanji_start_id) + 20;
+        
         kanji_question_now = 0;
 
-        param = Kanji_Data.param; //全漢字のデータを入れる
+        param = Kanji_Data.param; //全漢字のデータを取得
+        SectionKanjis = param.GetRange(kanji_start_id,kanji_end_id); //セクションの出題範囲の漢字に絞り込む
 
-        // for (int i = 0; i<10; i++){
-        //     Debug.Log(SectionKanjis[i].kanji);
-        // }
+        //AnswerCards12 = ANSWER_ZONE.GetComponentsInChildren<GameObject>();
 
-        SectionKanjis = param.GetRange(kanji_start_id,kanji_end_id); //出題範囲の漢字に絞り込む
-        //Debug.Log(kanji_start_id);
-        //Debug.Log(kanji_end_id);
 
-        //Debug.Log(SectionKanjis.Count);
-        Debug.Log(StageButtonController.CHOSEN_STAGE_ID);
+
     }
 
 
-    // Update is called once per frame
     void Update()
     {
         QuestionKanjiUGUI.text = SectionKanjis[kanji_question_now].kanji;
 
-        // if (Input.GetKey(KeyCode.Space)){
-        //     //Debug.Log(2323232);
-
-        //     for (int i = 0; i < 10 ; i ++){
-        //         Debug.Log(SectionKanjis[i].kanji);
-        //         Debug.Log(SectionKanjis[i].choices);
-        //     }
-            
-        // }
     }
 
 
-    public void testNextQuestion(){ 
 
+    public void testNextQuestion(){ 
+        //次の問題を出題、あるいはクリア処理
         if (kanji_question_now < 19) {
             kanji_question_now += 1;
         }else{
@@ -81,6 +72,8 @@ public class GameController : MonoBehaviour
         //Debug.Log(kanji_question_now);
         
     }
+
+
 
 
     public void toMainScene(){
