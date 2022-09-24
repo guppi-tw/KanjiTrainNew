@@ -8,7 +8,7 @@ using System.Linq;
 public class GameController : MonoBehaviour
 {
 
-    public string QuestionKanji = "漢";
+    public static string QuestionKanji = "漢";
     public string ChosenKanji = "漢";
     public TextMeshProUGUI QuestionKanjiUGUI;
 
@@ -26,16 +26,17 @@ public class GameController : MonoBehaviour
 
     int kanji_start_id = 1;
     int kanji_end_id;
-    int kanji_question_now = 0;
+    public static int kanji_question_now = 0;
+
     //基本的にセクションは20ごとに区切られる。
-
-
     public GameObject ANSWER_ZONE; //回答用の処理を司る部分。レベルに応じて色々変える予定。
     List<GameObject> AnswerCards12; //回答カードのリスト。1と2で用いる。
 
 
     void Start()
     {
+        
+
         section_id = StageButtonController.CHOSEN_STAGE_ID; //選んだセクションIDを代入
         kanji_start_id = (section_id) * 20;
         kanji_end_id = (kanji_start_id) + 20;
@@ -47,22 +48,17 @@ public class GameController : MonoBehaviour
 
         //AnswerCards12 = ANSWER_ZONE.GetComponentsInChildren<GameObject>();
 
-        var int_choice = 0;
-        foreach (Transform childTransform in ANSWER_ZONE.transform)
-        {
-            //Debug.Log(childTransform);
-            var ans = childTransform.GetComponentInChildren<TextMeshProUGUI>();
-            //var kanji_choices = SectionKanjis[kanji_question_now].choices.Split(",");
-            ans.text = SectionKanjis[kanji_question_now].choices[int_choice*2].ToString(); //string型から選択肢部分のみを抽出、代入
-            Debug.Log(ans.text);
-            int_choice += 1;
-        }
+        Debug.Log(SectionKanjis[kanji_question_now].choices.Split(','));
+        Debug.Log(SectionKanjis[kanji_question_now].choices.GetType());
+
+        setChoices();
 
     }
 
 
     void Update()
     {
+        QuestionKanji = SectionKanjis[kanji_question_now].kanji;
         QuestionKanjiUGUI.text = SectionKanjis[kanji_question_now].kanji;
 
     }
@@ -75,9 +71,11 @@ public class GameController : MonoBehaviour
         if (kanji_question_now < 19)
         {
             kanji_question_now += 1;
+            setChoices();
         }
         else
         {
+            kanji_question_now = 0;
             SceneManager.LoadScene("ClearScene");
         }
     }
@@ -87,37 +85,38 @@ public class GameController : MonoBehaviour
         //次の問題を出題、あるいはクリア処理   
         if (kanji_question_now == 0)
         {
-            var choice_id = 0;
-            foreach (Transform childTransform in ANSWER_ZONE.transform)
-            {
-                Debug.Log(childTransform);
-                var ans = childTransform.GetComponentInChildren<TextMeshProUGUI>();
-                ans.text = SectionKanjis[kanji_question_now].choices[choice_id].ToString();
-                Debug.Log(ans.text);
-                choice_id += 1;
-            }
-            choice_id = 0;
+            setChoices();
         }
         else if (kanji_question_now < 20)
         {
             kanji_question_now += 1;
-            var choice_id = 0;
-            foreach (Transform childTransform in ANSWER_ZONE.transform)
-            {
-                Debug.Log(childTransform);
-                var ans = childTransform.GetComponentInChildren<TextMeshProUGUI>();
-                ans.text = SectionKanjis[kanji_question_now].choices[choice_id].ToString();
-                Debug.Log(ans.text);
-                choice_id += 1;
-            }
-            choice_id = 0;
+            setChoices();
         }
         else
         {
             SceneManager.LoadScene("ClearScene");
         }
         //Debug.Log(kanji_question_now);
+    }
 
+    void setChoices(){ //選択肢を用意するための処理
+        var int_choice = 0;
+        var ans_choice = Random.Range(0,4); //0 ~ 4の間でランダムな整数値を返す
+        foreach (Transform childTransform in ANSWER_ZONE.transform)
+        {
+            //Debug.Log(childTransform);
+            var ans = childTransform.GetComponentInChildren<TextMeshProUGUI>();
+            //var kanji_choices = SectionKanjis[kanji_question_now].choices.Split(",");
+            if (int_choice == ans_choice){
+                ans.text = SectionKanjis[kanji_question_now].kanji;
+            }else{
+                var choices = SectionKanjis[kanji_question_now].choices.Split(',');
+                ans.text = choices[int_choice]; //string型から選択肢部分のみを抽出、代入
+            }
+
+            //Debug.Log(ans.text);
+            int_choice += 1;
+        }
     }
 
 
