@@ -32,6 +32,9 @@ public class GameController : MonoBehaviour
     public GameObject ANSWER_ZONE; //回答用の処理を司る部分。レベルに応じて色々変える予定。
     List<GameObject> AnswerCards12; //回答カードのリスト。1と2で用いる。
 
+    public AudioClip OKsound;
+    public AudioClip FAILsound;
+
 
     void Start()
     {
