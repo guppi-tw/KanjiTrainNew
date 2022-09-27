@@ -32,13 +32,12 @@ public class GameController : MonoBehaviour
     public GameObject ANSWER_ZONE; //回答用の処理を司る部分。レベルに応じて色々変える予定。
     List<GameObject> AnswerCards12; //回答カードのリスト。1と2で用いる。
 
-    
+
+    public static List<string> toSaveKanjiList = new List<string>() ;
 
 
     void Start()
     {
-        
-
         section_id = StageButtonController.CHOSEN_STAGE_ID; //選んだセクションIDを代入
         kanji_start_id = (section_id) * 20;
         kanji_end_id = (kanji_start_id) + 20;
@@ -54,8 +53,6 @@ public class GameController : MonoBehaviour
         Debug.Log(SectionKanjis[kanji_question_now].choices.GetType());
 
         setChoices();
-
-    
     }
 
 
@@ -68,7 +65,7 @@ public class GameController : MonoBehaviour
 
 
 
-    public void testNextQuestion()
+    public void testNextQuestion() //テスト用の順送り
     {
         //次の問題を出題、あるいはクリア処理
         if (kanji_question_now < 19)
@@ -85,6 +82,7 @@ public class GameController : MonoBehaviour
 
     public void NextQuestion()
     {
+        toSaveKanjiList.Add(QuestionKanji);
         //次の問題を出題、あるいはクリア処理   
         if (kanji_question_now == 0)
         {
@@ -97,6 +95,8 @@ public class GameController : MonoBehaviour
         }
         else
         {
+
+            ES3.Save("GottenKanji",toSaveKanjiList);
             SceneManager.LoadScene("ClearScene");
         }
         //Debug.Log(kanji_question_now);

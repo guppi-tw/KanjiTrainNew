@@ -16,9 +16,11 @@ public class IchiranController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("gottenのstartが実行されました");
         ES3.Save("myInt", 123);
         //ES3.Save("GottenKanji", GottenKanji);
         GottenKanji = ES3.Load("GottenKanji",defaultValue);
+        Debug.Log("セーブデータ="+GottenKanji);
 
         for (int i = 0; i < GottenKanji.Count; i ++){
             var parent = Content.transform;
