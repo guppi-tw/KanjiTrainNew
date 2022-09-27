@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
@@ -27,6 +28,7 @@ public class GameController : MonoBehaviour
     int kanji_start_id = 1;
     int kanji_end_id;
     public static int kanji_question_now = 0;
+    public Text MondaiNumberUI;
 
     //基本的にセクションは20ごとに区切られる。
     public GameObject ANSWER_ZONE; //回答用の処理を司る部分。レベルに応じて色々変える予定。
@@ -61,6 +63,9 @@ public class GameController : MonoBehaviour
         QuestionKanji = SectionKanjis[kanji_question_now].kanji;
         QuestionKanjiUGUI.text = SectionKanjis[kanji_question_now].kanji;
 
+        MondaiNumberUI.text = "第" + (kanji_question_now + 1).ToString() + "問"; 
+
+
     }
 
 
@@ -86,6 +91,7 @@ public class GameController : MonoBehaviour
         //次の問題を出題、あるいはクリア処理   
         if (kanji_question_now == 0)
         {
+            kanji_question_now += 1;
             setChoices();
         }
         else if (kanji_question_now < 20)

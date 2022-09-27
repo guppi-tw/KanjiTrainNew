@@ -18,6 +18,6 @@ public class ButtonController : MonoBehaviour
     }
 
     public void toGottenKanji(){
-        SceneManager.LoadScene("GottenKanjiScene");
+        SceneManager.LoadScene("GottenKanji");
     }
 }
