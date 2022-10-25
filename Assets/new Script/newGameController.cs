@@ -70,13 +70,13 @@ public class newGameController : MonoBehaviour
         else if (level_id == 2){
         //レベル2用の画像を読み込む
         targetKanji = kanji_Question_Data.param[question_number_now].kanji;
+        //↓ここの画像を差し替える必要あり(ステージ2用のファイル名)
         KanjiTargetImage.sprite = Resources.Load<Sprite>("1025版/"+mondai_n_str.ToString()+"_"+ targetKanji + "_0");
 
         }else if(level_id == 3){
-        //レベル3は画像を読み込まない
+        //レベル3は画像オブジェクトを非表示にする
         targetKanji = kanji_Question_Data.param[question_number_now].kanji;
         try{
-        //var targetKanjiGameObject = GameObject.Find("KanjiTargetImage");
         KanjiTargetImageGameObject.SetActive(false);}
         catch (System.NullReferenceException e){
             Debug.Log(e);
