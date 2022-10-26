@@ -21,11 +21,29 @@ public class newButtonController : MonoBehaviour
         SceneManager.LoadScene("NewStageSelect");
     }
 
+    public static int selected_day_id = 1;
+
+    public void toDay1(){
+        selected_day_id = 1;
+        SceneManager.LoadScene("NewIngameScene");
+    }
+
+    public void toDay2(){
+        selected_day_id = 2;
+        SceneManager.LoadScene("NewIngameScene");
+        
+    }
+
+    public void toDay3(){
+        selected_day_id = 3;
+        SceneManager.LoadScene("NewIngameScene");
+        
+    }
+
     public void setQuestionText(){
         GameObject inputField = GameObject.Find("InputField");
         InputField input = inputField.GetComponent<InputField>();
         
-
         Debug.Log(input.text);
         var input_kanji_list = input.text.Split(',') ;
         Debug.Log(input_kanji_list);
@@ -42,8 +60,6 @@ public class newButtonController : MonoBehaviour
         }
 
         }
-
-
     }
 
 
