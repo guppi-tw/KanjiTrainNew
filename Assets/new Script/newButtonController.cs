@@ -6,18 +6,27 @@ using UnityEngine.UI;
 
 public class newButtonController : MonoBehaviour
 {
+    void shokika(){
+       newGameController.level_id = 1;
+       newGameController.number_of_ok = 0;
+       newGameController.question_number_now = 0;
+    }
 
     public void toNewMain(){
+        shokika();
         SceneManager.LoadScene("NewMainScene");
     }
 
     public void toNewSettings(){
+        shokika();
         SceneManager.LoadScene("NewSettingScene");
     }
 
     public void toNewStageSelect(){
+        shokika();
         SceneManager.LoadScene("NewStageSelect");
     }
+
 
     public static int selected_day_id = 1;
 

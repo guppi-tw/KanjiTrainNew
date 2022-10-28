@@ -27,8 +27,6 @@ public class newGameController : MonoBehaviour
 
     public Image KanjiTargetImage;
     public GameObject KanjiTargetImageGameObject;
-    //public GameObject KanjichoicesBox;
-    //public GameObject[] KanjiChoicesParents;
 
     public List<Image> KanjiChoices = new List<Image>(); 
     public List<string> SyutsudaiKanji;
@@ -40,19 +38,23 @@ public class newGameController : MonoBehaviour
     public static int number_of_ok = 0;
     //??
 
-    // Start is called before the first frame update
     void Start()
     {
-        //Debug.Log(kanji_Question_Data.param[0].id);
-        //Debug.Log(kanji_Question_Data.param[0].kanji);
-        //Debug.Log(kanji_Question_Data.param[0].example);
-        setSyutudaiKanji();
+        Debug.Log("Startが実行");
 
+
+        day_id = newButtonController.selected_day_id;
+        
+        setSyutudaiKanji();
         makeNewQuestion();
+
+        
+        Debug.Log("day_id: " + day_id);
+        Debug.Log("level_id: " + level_id);
+
         DayUI.text = day_id.ToString()+"日目"; //何日目か表示する分
     }
 
-    // Update is called once per frame
     void Update()
     {
         setsumonNumberUI.text = "第" + (question_number_now).ToString() + "問";
@@ -65,7 +67,7 @@ public class newGameController : MonoBehaviour
         //List<string> syutudaiKanji = new List<string>(); //要素30のstringリスト
         syutudaiKanji.AddRange(ES3.Load<string[]>("question_hairetsu"));
         //Debug.Log(syutudaiKanji[1]);
-        Debug.Log(syutudaiKanji.Count);
+        //Debug.Log(syutudaiKanji.Count);
         syutsudaiToday = syutudaiKanji.GetRange(0,10);
 
         if (day_id == 1){
@@ -84,11 +86,12 @@ public class newGameController : MonoBehaviour
         for (int i = 0; i < 10 ; i++){
             var j = int.Parse(syutsudaiToday[i]);
             var targetKanji = kanji_Question_Data.param[j].kanji;
-            Debug.Log(targetKanji);
+            //Debug.Log(targetKanji);
         }
     }
 
     public void makeNewQuestion(){
+        //Debug.Log("mekenuewquestionが呼ばれました");
         var j = int.Parse(syutsudaiToday[question_number_now]); //jはユニークの漢字ID
         var targetKanji = kanji_Question_Data.param[j].kanji;
 
@@ -102,6 +105,7 @@ public class newGameController : MonoBehaviour
         else if (level_id == 2){
         //レベル2用の画像を読み込む
         KanjiTargetImage.sprite = Resources.Load<Sprite>("1025版/"+mondai_n_str.ToString()+"_"+ targetKanji + "_9");
+        Debug.Log("1025版/"+mondai_n_str.ToString()+"_"+ targetKanji + "_9");
 
         }else if(level_id == 3){
         //レベル3は画像オブジェクトを非表示にする

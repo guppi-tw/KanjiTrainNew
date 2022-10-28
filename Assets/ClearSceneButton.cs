@@ -24,8 +24,11 @@ public class ClearSceneButton : MonoBehaviour
     public void toNextStage(){
         if (newGameController.level_id == 3){
             //最終結果表示シーンの追加と読み込み？
+            SceneManager.LoadScene("FinalClearScene");
         }else{
             newGameController.level_id += 1;
+            newGameController.question_number_now = 0;
+            newGameController.number_of_ok = 0;
             SceneManager.LoadScene("NewIngameScene");
         }
     }
