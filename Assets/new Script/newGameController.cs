@@ -10,6 +10,7 @@ public class newGameController : MonoBehaviour
     [Header("共通")]
     [Range(1,3)] public static int day_id = newButtonController.selected_day_id; //n日目の分か、
     [Range(1,3)] public int level_id = 1; //stageのレベル。
+    
     public static int question_number_now = 0;
     public kanji_question_data kanji_Question_Data;
 
@@ -33,11 +34,9 @@ public class newGameController : MonoBehaviour
     public List<string> SyutsudaiKanji;
 
     //string testKanjiString = "伺,鬱,璧"; //この下位で出題される漢字のリスト化
-
-
     //↓追加
     public static List<string> syutudaiKanji = new List<string>();
-    public List<string> syutsudaiToday;
+    public static List<string> syutsudaiToday;
     //??
 
     // Start is called before the first frame update
@@ -62,10 +61,11 @@ public class newGameController : MonoBehaviour
     }
 
 
-    public void setSyutudaiKanji(){
+    public void setSyutudaiKanji(){//一日分の出題する漢字をセットする
         //List<string> syutudaiKanji = new List<string>(); //要素30のstringリスト
         syutudaiKanji.AddRange(ES3.Load<string[]>("question_hairetsu"));
         //Debug.Log(syutudaiKanji[1]);
+        
         Debug.Log(syutudaiKanji.Count);
         syutsudaiToday = syutudaiKanji.GetRange(0,10);
 
@@ -85,19 +85,14 @@ public class newGameController : MonoBehaviour
             var targetKanji = kanji_Question_Data.param[j].kanji;
             Debug.Log(targetKanji);
         }
-        
-
-        //ここでセクションの漢字をセットする処理
-        //クリアしたら順次リストから削除していく
-        //(レベルが変わったら再びセットする)
     }
 
     public void makeNewQuestion(){
         //var targetKanji = kanji_Question_Data.param[question_number_now].kanji;
-        var j = int.Parse(syutsudaiToday[question_number_now]); //jとかわかりにくいけど一旦大目に見て...ユニークの漢字ID
+        var j = int.Parse(syutsudaiToday[question_number_now]); //jはユニークの漢字ID
         var targetKanji = kanji_Question_Data.param[j].kanji;
-        Debug.Log("target漢字="+targetKanji);
 
+        Debug.Log("target漢字="+targetKanji);
         //var targetKanji = kanji_Question_Data.param[question_number_now].kanji;
         var mondai_n_str = j + 1;
 
@@ -123,12 +118,9 @@ public class newGameController : MonoBehaviour
 
         }
 
-
         KanjiReibunUI.text  = kanji_Question_Data.param[j].example;
-
         //Debug.Log("1025版/"+mondai_n_str.ToString()+"_"+ targetKanji + "_0");
         //KanjiReibunUI.text = kanji_Question_Data.param[section_id].example;
-
         for (int i = 0; i <4; i++){
             var filename = targetKanji+ "_"+ i.ToString();
             //Debug.Log(filename);
