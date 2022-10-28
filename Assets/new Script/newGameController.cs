@@ -37,6 +37,7 @@ public class newGameController : MonoBehaviour
     //↓追加
     public static List<string> syutudaiKanji = new List<string>();
     public static List<string> syutsudaiToday;
+    public static int number_of_ok = 0;
     //??
 
     // Start is called before the first frame update
@@ -49,7 +50,6 @@ public class newGameController : MonoBehaviour
 
         makeNewQuestion();
         DayUI.text = day_id.ToString()+"日目"; //何日目か表示する分
-
     }
 
     // Update is called once per frame
@@ -65,7 +65,6 @@ public class newGameController : MonoBehaviour
         //List<string> syutudaiKanji = new List<string>(); //要素30のstringリスト
         syutudaiKanji.AddRange(ES3.Load<string[]>("question_hairetsu"));
         //Debug.Log(syutudaiKanji[1]);
-        
         Debug.Log(syutudaiKanji.Count);
         syutsudaiToday = syutudaiKanji.GetRange(0,10);
 
@@ -80,6 +79,8 @@ public class newGameController : MonoBehaviour
             Debug.Log("3日目");
         }
 
+        //不正解回答を保持するためのリストのコピー
+
         for (int i = 0; i < 10 ; i++){
             var j = int.Parse(syutsudaiToday[i]);
             var targetKanji = kanji_Question_Data.param[j].kanji;
@@ -88,38 +89,30 @@ public class newGameController : MonoBehaviour
     }
 
     public void makeNewQuestion(){
-        //var targetKanji = kanji_Question_Data.param[question_number_now].kanji;
         var j = int.Parse(syutsudaiToday[question_number_now]); //jはユニークの漢字ID
         var targetKanji = kanji_Question_Data.param[j].kanji;
 
         Debug.Log("target漢字="+targetKanji);
-        //var targetKanji = kanji_Question_Data.param[question_number_now].kanji;
-        var mondai_n_str = j + 1;
+        var mondai_n_str = j + 1; //index調整
 
         if (level_id == 1){
-        //targetKanji = kanji_Question_Data.param[question_number_now].kanji; 
         KanjiTargetImage.sprite = Resources.Load<Sprite>("1025版/"+mondai_n_str.ToString()+"_"+ targetKanji + "_0");
-        Debug.Log("1025版/"+mondai_n_str.ToString()+"_"+ targetKanji + "_0");
+        //Debug.Log("1025版/"+mondai_n_str.ToString()+"_"+ targetKanji + "_0");
         }
         else if (level_id == 2){
         //レベル2用の画像を読み込む
-        //targetKanji = kanji_Question_Data.param[question_number_now].kanji;
-        //↓ここの画像を差し替える必要あり(ステージ2用のファイル名)
         KanjiTargetImage.sprite = Resources.Load<Sprite>("1025版/"+mondai_n_str.ToString()+"_"+ targetKanji + "_9");
 
         }else if(level_id == 3){
         //レベル3は画像オブジェクトを非表示にする
-        //targetKanji = kanji_Question_Data.param[question_number_now].kanji;
+
         try{
         KanjiTargetImageGameObject.SetActive(false);}
         catch (System.NullReferenceException e){
             Debug.Log(e);
-        }
-
-        }
+        } }
 
         KanjiReibunUI.text  = kanji_Question_Data.param[j].example;
-        //Debug.Log("1025版/"+mondai_n_str.ToString()+"_"+ targetKanji + "_0");
         //KanjiReibunUI.text = kanji_Question_Data.param[section_id].example;
         for (int i = 0; i <4; i++){
             var filename = targetKanji+ "_"+ i.ToString();
@@ -128,5 +121,4 @@ public class newGameController : MonoBehaviour
         }
         question_number_now += 1;
     }
-
 }

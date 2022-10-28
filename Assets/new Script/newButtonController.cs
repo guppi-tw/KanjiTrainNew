@@ -7,8 +7,6 @@ using UnityEngine.UI;
 public class newButtonController : MonoBehaviour
 {
 
-
-
     public void toNewMain(){
         SceneManager.LoadScene("NewMainScene");
     }
