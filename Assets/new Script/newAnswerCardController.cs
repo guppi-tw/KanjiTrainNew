@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class newAnswerCardController : MonoBehaviour
 {
@@ -30,6 +31,7 @@ public class newAnswerCardController : MonoBehaviour
             audioSource.PlayOneShot(OKsound);
             if (newGameController.number_of_ok >= 10){
                 Debug.Log("ステージクリア");
+                SceneManager.LoadScene("NewClearSCene");
             }else{
                 newGameController.makeNewQuestion();
             }

@@ -9,7 +9,7 @@ public class newGameController : MonoBehaviour
  
     [Header("共通")]
     [Range(1,3)] public static int day_id = newButtonController.selected_day_id; //n日目の分か、
-    [Range(1,3)] public int level_id = 1; //stageのレベル。
+    [Range(1,3)] public static int level_id = 1; //stageのレベル。
     
     public static int question_number_now = 0;
     public kanji_question_data kanji_Question_Data;
