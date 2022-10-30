@@ -17,7 +17,7 @@ public class textController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        questionText.text = ES3.Load<string>("questionText");
+        questionText.text = string.Join(" ",ES3.Load<string[]>("question_hairetsu"));
         //questionText.text = "aaaaaaa";
     }
 }

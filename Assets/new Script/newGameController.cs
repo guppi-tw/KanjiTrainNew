@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
+
 
 
 public class newGameController : MonoBehaviour
@@ -37,22 +39,33 @@ public class newGameController : MonoBehaviour
     public static List<string> syutsudaiToday;
     public static int number_of_ok = 0;
     //??
+    //セーブデータ保存処理
+
+
+    ///
+    /// 
+
+
 
     void Start()
     {
-        Debug.Log("Startが実行");
-
-
+        //ebug.Log("Startが実行");
         day_id = newButtonController.selected_day_id;
         
         setSyutudaiKanji();
         makeNewQuestion();
-
         
         Debug.Log("day_id: " + day_id);
         Debug.Log("level_id: " + level_id);
 
         DayUI.text = day_id.ToString()+"日目"; //何日目か表示する分
+
+
+        //jsonの読み取り処理
+        StreamReader reader = new StreamReader(Application.dataPath + "/Json/text.json");
+
+
+        //
     }
 
     void Update()
@@ -69,7 +82,6 @@ public class newGameController : MonoBehaviour
         //Debug.Log(syutudaiKanji[1]);
         //Debug.Log(syutudaiKanji.Count);
         syutsudaiToday = syutudaiKanji.GetRange(0,10);
-
         if (day_id == 1){
             syutsudaiToday = syutudaiKanji.GetRange(0,10);
             Debug.Log("1日目");
@@ -81,8 +93,6 @@ public class newGameController : MonoBehaviour
             Debug.Log("3日目");
         }
 
-        //不正解回答を保持するためのリストのコピー
-
         for (int i = 0; i < 10 ; i++){
             var j = int.Parse(syutsudaiToday[i]);
             var targetKanji = kanji_Question_Data.param[j].kanji;
@@ -91,10 +101,11 @@ public class newGameController : MonoBehaviour
     }
 
     public void makeNewQuestion(){
+
+
         //Debug.Log("mekenuewquestionが呼ばれました");
         var j = int.Parse(syutsudaiToday[question_number_now]); //jはユニークの漢字ID
         var targetKanji = kanji_Question_Data.param[j].kanji;
-
         Debug.Log("target漢字="+targetKanji);
         var mondai_n_str = j + 1; //index調整
 
@@ -126,3 +137,6 @@ public class newGameController : MonoBehaviour
         question_number_now += 1;
     }
 }
+
+
+
