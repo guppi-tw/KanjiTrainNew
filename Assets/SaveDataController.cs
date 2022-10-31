@@ -28,8 +28,8 @@ public static KanjiSaveData[] KANJI_SCORES;
             StreamReader reader = new StreamReader(Application.dataPath + "/Json/text.json");
             string datastr = reader.ReadToEnd();
             reader.Close();
-
             KANJI_SCORES = JsonUtility.FromJson<KanjiSaveData[]>(datastr);
+            Debug.Log(datastr);
         //
         }else{
             Debug.Log("セーブデータが初期化されました");

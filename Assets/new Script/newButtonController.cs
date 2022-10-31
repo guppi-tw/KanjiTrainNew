@@ -16,31 +16,25 @@ public class newButtonController : MonoBehaviour
         shokika();
         SceneManager.LoadScene("NewMainScene");
     }
-
     public void toNewSettings(){
         shokika();
         SceneManager.LoadScene("NewSettingScene");
     }
-
     public void toNewStageSelect(){
         shokika();
         SceneManager.LoadScene("NewStageSelect");
     }
 
-
     public static int selected_day_id = 1;
-
     public void toDay1(){
         selected_day_id = 1;
         SceneManager.LoadScene("NewIngameScene");
     }
-
     public void toDay2(){
         selected_day_id = 2;
         SceneManager.LoadScene("NewIngameScene");
         
     }
-
     public void toDay3(){
         selected_day_id = 3;
         SceneManager.LoadScene("NewIngameScene");
@@ -80,7 +74,7 @@ public class newButtonController : MonoBehaviour
         }
 
         input_UI.text = string.Join(" ",ES3.Load<string[]>("question_hairetsu"));
-        Debug.Log(input_UI.text = string.Join(" ",ES3.Load<string[]>("question_hairetsu")));
+        //Debug.Log(input_UI.text = string.Join(" ",ES3.Load<string[]>("question_hairetsu")));
     }
 
 
