@@ -32,7 +32,6 @@ public class SaveDataLoader : MonoBehaviour
             StreamReader reader = new StreamReader(Application.dataPath + "/Json/text.json");
             string datastr = reader.ReadToEnd();
 
-
             reader.Close();
             SaveDataController.KANJI_SCORES = JsonUtility.FromJson<SaveDataController.KanjiSaveData[]>(datastr);
             //Debug.Log(datastr);

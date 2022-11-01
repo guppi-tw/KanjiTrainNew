@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 public class newAnswerCardController : MonoBehaviour
 {
@@ -28,10 +29,21 @@ public class newAnswerCardController : MonoBehaviour
         
         //Debug.Log(newGameController.number_of_ok);
 
+        
+        //ファイルへの書き込み処理
+        StreamReader reader = new StreamReader(Application.dataPath + "/Json/text.json");
+        string datastr = reader.ReadToEnd();
+        reader.Close();
+        //var KANJI_SCORES = JsonUtility.FromJson<KanjiSaveData[]>(datastr);
+        KanjisSaveData kanjissavedata = JsonUtility.FromJson<KanjisSaveData>(datastr);
+        //読み込み    
+
         if (imgNamelast == (char)0){
             //Debug.Log("正解");
             newGameController.number_of_ok += 1;
             audioSource.PlayOneShot(OKsound);
+
+            kanjissavedata.item[newGameController.j].n_OK += 1 * (int)Mathf.Pow(100,(newGameController.level_id -1));
 
             if (newGameController.number_of_ok >= 10){
                 Debug.Log("ステージクリア");
@@ -42,6 +54,7 @@ public class newAnswerCardController : MonoBehaviour
         }else{
             //Debug.Log("不正解");
             audioSource.PlayOneShot(FALSEsound);   
+            kanjissavedata.item[newGameController.j].n_OK += 1 * (int)Mathf.Pow(100,(newGameController.level_id - 1));
 
             Namearray = imgName.Split('_');
             img_kanjiID = Namearray[0];
@@ -57,8 +70,24 @@ public class newAnswerCardController : MonoBehaviour
         }
         Debug.Log(tes);
 
-        //ファイルへの書き込み処理
-        
+        string filePath = Application.dataPath + "/Json/text.json";
+        string json = JsonUtility.ToJson(kanjissavedata, true);
+        Debug.Log("json="+ kanjissavedata);
 
+        StreamWriter streamWriter = new StreamWriter(filePath);
+        streamWriter.Write(json);
+        streamWriter.Flush();
+        streamWriter.Close();
+    }
+
+    public class KanjisSaveData{
+        public KanjiSaveData[] item; 
+    }
+
+    [System.Serializable]
+    public class KanjiSaveData{
+        public int k_id;
+        public int n_OK = 0;
+        public int n_FAIL = 0;
     }
 }

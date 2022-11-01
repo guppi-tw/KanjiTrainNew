@@ -29,8 +29,7 @@ public static KanjiSaveData[] KANJI_SCORES;
             string datastr = reader.ReadToEnd();
             reader.Close();
             KANJI_SCORES = JsonUtility.FromJson<KanjiSaveData[]>(datastr);
-            Debug.Log(datastr);
-        //
+            //Debug.Log(datastr);
         }else{
             Debug.Log("セーブデータが初期化されました");
             KanjisSaveData save = new KanjisSaveData();
@@ -39,6 +38,7 @@ public static KanjiSaveData[] KANJI_SCORES;
                 save.item[i] = new KanjiSaveData();
                 save.item[i].k_id = i; 
             }
+            
         string filePath = Application.dataPath + "/Json/text.json";
         string json = JsonUtility.ToJson(save, true);
 
