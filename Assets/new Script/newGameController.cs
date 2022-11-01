@@ -10,8 +10,11 @@ public class newGameController : MonoBehaviour
 {
  
     [Header("共通")]
-    [Range(1,3)] public static int day_id = newButtonController.selected_day_id; //n日目の分か、
-    [Range(1,3)] public static int level_id = 1; //stageのレベル。
+    public static int day_id = newButtonController.selected_day_id; //n日目の分か、
+    public static int level_id = 1; //stageのレベル。
+
+    //[Range(1,3)]  public int day_id_set = 1;
+    //[Range(1,3)]  public int level_id_set = 3;
     
     public static int question_number_now = 0;
     public kanji_question_data kanji_Question_Data;
@@ -38,24 +41,26 @@ public class newGameController : MonoBehaviour
     public static List<string> syutudaiKanji = new List<string>();
     public static List<string> syutsudaiToday;
     public static int number_of_ok = 0;
-    //??
+    //
     //セーブデータ保存処理
     ///
     /// 
+    public GameObject thirdStageButton;
 
-
+    void Awake(){
+        //day_id = day_id_set;
+        //level_id = level_id_set;
+    }
 
     void Start()
     {
         //ebug.Log("Startが実行");
         day_id = newButtonController.selected_day_id;
-        
         setSyutudaiKanji();
         makeNewQuestion();
-        
+
         Debug.Log("day_id: " + day_id);
         Debug.Log("level_id: " + level_id);
-
         DayUI.text = day_id.ToString()+"日目"; //何日目か表示する分
 
     }
@@ -71,8 +76,6 @@ public class newGameController : MonoBehaviour
     public void setSyutudaiKanji(){//一日分の出題する漢字をセットする
         //List<string> syutudaiKanji = new List<string>(); //要素30のstringリスト
         syutudaiKanji.AddRange(ES3.Load<string[]>("question_hairetsu"));
-        //Debug.Log(syutudaiKanji[1]);
-        //Debug.Log(syutudaiKanji.Count);
 
         syutsudaiToday = syutudaiKanji.GetRange(0,10);
         if (day_id == 1){
@@ -94,24 +97,30 @@ public class newGameController : MonoBehaviour
     }
 
     public void makeNewQuestion(){
-
         //Debug.Log("mekenuewquestionが呼ばれました");
         var j = int.Parse(syutsudaiToday[question_number_now]); //jはユニークの漢字ID
         var targetKanji = kanji_Question_Data.param[j].kanji;
-        Debug.Log("target漢字="+targetKanji);
+        //Debug.Log("target漢字="+targetKanji);
         var mondai_n_str = j + 1; //index調整
 
         if (level_id == 1){
         KanjiTargetImage.sprite = Resources.Load<Sprite>("1025版/"+mondai_n_str.ToString()+"_"+ targetKanji + "_0");
         //Debug.Log("1025版/"+mondai_n_str.ToString()+"_"+ targetKanji + "_0");
+
+        thirdStageButton.SetActive(false);
         }
+
         else if (level_id == 2){
         //レベル2用の画像を読み込む
         KanjiTargetImage.sprite = Resources.Load<Sprite>("1025版/"+mondai_n_str.ToString()+"_"+ targetKanji + "_9");
         Debug.Log("1025版/"+mondai_n_str.ToString()+"_"+ targetKanji + "_9");
 
-        }else if(level_id == 3){
-        //レベル3は画像オブジェクトを非表示にする
+        //var nextbutton = GameObject.Find("レベル3");
+        thirdStageButton.SetActive(false);
+
+        }else if(level_id == 3){ 
+        KanjiChoiceImages.SetActive(false);
+
         try{
         KanjiTargetImageGameObject.SetActive(false);}
         catch (System.NullReferenceException e){
@@ -125,7 +134,9 @@ public class newGameController : MonoBehaviour
             //Debug.Log(filename);
             KanjiChoices[i].sprite = Resources.Load<Sprite>("1025版/"+ mondai_n_str.ToString()+"_"+targetKanji + "_" + i.ToString());
         }
+
         question_number_now += 1;
+
     }
 }
 
