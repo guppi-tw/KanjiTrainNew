@@ -43,7 +43,7 @@ public class newAnswerCardController : MonoBehaviour
             newGameController.number_of_ok += 1;
             audioSource.PlayOneShot(OKsound);
 
-            kanjissavedata.item[newGameController.j].n_OK += 1 * (int)Mathf.Pow(100,(newGameController.level_id -1));
+            kanjissavedata.item[newGameController.j].n_OK += 1 * (int)Mathf.Pow(1000,(newGameController.level_id -1));
 
             if (newGameController.number_of_ok >= 10){
                 Debug.Log("ステージクリア");
@@ -54,7 +54,7 @@ public class newAnswerCardController : MonoBehaviour
         }else{
             //Debug.Log("不正解");
             audioSource.PlayOneShot(FALSEsound);   
-            kanjissavedata.item[newGameController.j].n_OK += 1 * (int)Mathf.Pow(100,(newGameController.level_id - 1));
+            kanjissavedata.item[newGameController.j].n_OK += 1 * (int)Mathf.Pow(1000,(newGameController.level_id - 1));
 
             Namearray = imgName.Split('_');
             img_kanjiID = Namearray[0];
