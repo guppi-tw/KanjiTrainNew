@@ -40,8 +40,6 @@ public class newGameController : MonoBehaviour
     public static int number_of_ok = 0;
     //??
     //セーブデータ保存処理
-
-
     ///
     /// 
 
@@ -60,12 +58,6 @@ public class newGameController : MonoBehaviour
 
         DayUI.text = day_id.ToString()+"日目"; //何日目か表示する分
 
-
-        //jsonの読み取り処理
-        StreamReader reader = new StreamReader(Application.dataPath + "/Json/text.json");
-
-
-        //
     }
 
     void Update()
@@ -81,6 +73,7 @@ public class newGameController : MonoBehaviour
         syutudaiKanji.AddRange(ES3.Load<string[]>("question_hairetsu"));
         //Debug.Log(syutudaiKanji[1]);
         //Debug.Log(syutudaiKanji.Count);
+
         syutsudaiToday = syutudaiKanji.GetRange(0,10);
         if (day_id == 1){
             syutsudaiToday = syutudaiKanji.GetRange(0,10);
@@ -102,7 +95,6 @@ public class newGameController : MonoBehaviour
 
     public void makeNewQuestion(){
 
-
         //Debug.Log("mekenuewquestionが呼ばれました");
         var j = int.Parse(syutsudaiToday[question_number_now]); //jはユニークの漢字ID
         var targetKanji = kanji_Question_Data.param[j].kanji;
@@ -120,7 +112,6 @@ public class newGameController : MonoBehaviour
 
         }else if(level_id == 3){
         //レベル3は画像オブジェクトを非表示にする
-
         try{
         KanjiTargetImageGameObject.SetActive(false);}
         catch (System.NullReferenceException e){

@@ -26,8 +26,7 @@ public class newAnswerCardController : MonoBehaviour
         
         if (imgNamelast == (char)0){
             Debug.Log("正解");
-            var n_ok = SaveDataController.KANJI_SCORES[int.Parse(imgNamefirst) - 1].n_OK;
-
+        
             newGameController.number_of_ok += 1;
             audioSource.PlayOneShot(OKsound);
 
@@ -39,8 +38,7 @@ public class newAnswerCardController : MonoBehaviour
             }
         }else{
             Debug.Log("不正解");
-            var n_ok = SaveDataController.KANJI_SCORES[int.Parse(imgNamefirst) - 1].n_OK;
-
+            
             audioSource.PlayOneShot(FALSEsound);
             newGameController.syutsudaiToday.Add(imgNamefirst);//不正解なら不正解リストに値を追加(リストの最後に間違った漢字が追加される)
             newGameController.makeNewQuestion(); 

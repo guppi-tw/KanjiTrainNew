@@ -12,7 +12,7 @@ public class dataCheckButton : MonoBehaviour
         if (ScoreDisplayWindow.activeSelf == false){
             ScoreDisplayWindow.SetActive(true);
         }else{
-            ScoreDisplayWindow.SetActive(true);
+            ScoreDisplayWindow.SetActive(false);
         }
         
     }

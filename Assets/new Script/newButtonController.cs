@@ -43,6 +43,7 @@ public class newButtonController : MonoBehaviour
 
 
     public Text input_UI;
+    
     public void setQuestionText(){
         GameObject inputField = GameObject.Find("InputField");
         InputField input = inputField.GetComponent<InputField>();
