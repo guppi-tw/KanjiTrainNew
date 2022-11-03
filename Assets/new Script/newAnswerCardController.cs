@@ -18,7 +18,6 @@ public class newAnswerCardController : MonoBehaviour
 
     public void pushChoiceButton(){
         var image = this.gameObject.GetComponent<Image>();
-
         string imgName = image.sprite.name;
         string[] Namearray = imgName.Split('_');
         Debug.Log(Namearray);
@@ -30,9 +29,9 @@ public class newAnswerCardController : MonoBehaviour
         //Debug.Log(newGameController.number_of_ok);
 
         //ファイルへの書き込み処理
-        StreamReader reader = new StreamReader(Application.dataPath + @"/Resources/Json/text.json");
-        string datastr = reader.ReadToEnd();
-        reader.Close();
+        //StreamReader reader = new StreamReader(Application.dataPath + @"/Resources/Json/text.json");
+        string datastr = ES3.Load<string>("KANJI_SCORE");
+        //reader.Close();
         //var KANJI_SCORES = JsonUtility.FromJson<KanjiSaveData[]>(datastr);
         KanjisSaveData kanjissavedata = JsonUtility.FromJson<KanjisSaveData>(datastr);
         //読み込み    
@@ -50,6 +49,7 @@ public class newAnswerCardController : MonoBehaviour
             }else{
                 newGameController.makeNewQuestion();
             }
+            
         }else{
             //Debug.Log("不正解");
             audioSource.PlayOneShot(FALSEsound);   
@@ -69,14 +69,17 @@ public class newAnswerCardController : MonoBehaviour
         }
         Debug.Log(tes);
 
-        string filePath = Application.dataPath + @"/Resources/Json/text.json";
+        //
+        //string filePath = Application.dataPath + @"/Resources/Json/text.json";
         string json = JsonUtility.ToJson(kanjissavedata, true);
-        Debug.Log("json="+ kanjissavedata);
+        //Debug.Log("json="+ kanjissavedata);
 
-        StreamWriter streamWriter = new StreamWriter(filePath);
-        streamWriter.Write(json);
-        streamWriter.Flush();
-        streamWriter.Close();
+        ES3.Save<string>("KANJI_SCORE", json);
+
+        // StreamWriter streamWriter = new StreamWriter(filePath);
+        // streamWriter.Write(json);
+        // streamWriter.Flush();
+        // streamWriter.Close();
     }
 
     public class KanjisSaveData{
