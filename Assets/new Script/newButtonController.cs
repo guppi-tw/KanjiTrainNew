@@ -26,7 +26,12 @@ public class newButtonController : MonoBehaviour
     public void toNewStageSelect()
     {
         shokika();
-        SceneManager.LoadScene("NewStageSelect");
+        if (System.IO.File.Exists(Application.persistentDataPath + "/Json/text.json")){
+            Debug.Log("漢字データが設定されていません。");
+        }else{
+            SceneManager.LoadScene("NewStageSelect");
+        }
+        
     }
 
     public static int selected_day_id = 1;

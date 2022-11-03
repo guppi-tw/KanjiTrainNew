@@ -26,13 +26,10 @@ public class SaveDataLoader : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (System.IO.File.Exists(Application.dataPath + "/Json/text.json") == true){
+        if (ES3.KeyExists("KANJI_SCORE") == true){
             Debug.Log("セーブデータが読み込まれました");
             //jsonの読み取り処理
-            StreamReader reader = new StreamReader(Application.dataPath + "/Json/text.json");
-            string datastr = reader.ReadToEnd();
-
-            reader.Close();
+            string datastr =  ES3.Load<string>("KANJI_SCORE");
             SaveDataController.KANJI_SCORES = JsonUtility.FromJson<SaveDataController.KanjiSaveData[]>(datastr);
             //Debug.Log(datastr);
 
@@ -49,6 +46,19 @@ public class SaveDataLoader : MonoBehaviour
         //datastr = datastr.Replace("\n","").Replace("\r", "").Replace("   "," ");
         Debug.Log(text_to_display);
         KanjiScoreUI.text = text_to_display;
+
+    }else{
+        Debug.Log("セーブデータが初期化されました");
+            KanjisSaveData save = new KanjisSaveData();
+            save.item = new KanjiSaveData[60];
+            for (int i = 0; i <= 59; i++){
+                save.item[i] = new KanjiSaveData();
+                save.item[i].k_id = i; 
+            }
+
+        string json = JsonUtility.ToJson(save, true);
+        ES3.Save<string>("KANJI_SCORE", json);
+        Debug.Log("save処理が実行");
     }
 
     }

@@ -47,6 +47,9 @@ public class newGameController : MonoBehaviour
     /// 
     public GameObject thirdStageButton;
 
+    [Header("デバッグ用")]
+    public bool isShuffleChoices = false;
+
     void Start()
     {
         //ebug.Log("Startが実行");
@@ -71,7 +74,6 @@ public class newGameController : MonoBehaviour
     {//一日分の出題する漢字をセットする
         //List<string> syutudaiKanji = new List<string>(); //要素30のstringリスト
         syutudaiKanji.AddRange(ES3.Load<string[]>("question_hairetsu"));
-
         syutsudaiToday = syutudaiKanji.GetRange(0, 10);
 
         if (day_id == 1)
@@ -123,7 +125,6 @@ public class newGameController : MonoBehaviour
             Debug.Log("1025版/" + mondai_n_str.ToString() + "_" + targetKanji + "_9");
             //var nextbutton = GameObject.Find("レベル3");
             thirdStageButton.SetActive(false);
-
         }
         else if (level_id == 3)
         {
@@ -141,12 +142,19 @@ public class newGameController : MonoBehaviour
         KanjiReibunUI.text = kanji_Question_Data.param[j].example;
         
         //KanjiReibunUI.text = kanji_Question_Data.param[section_id].example;
-
+        
         for (int i = 0; i < 4; i++)
         {
             var filename = targetKanji + "_" + i.ToString();
             //Debug.Log(filename);
             KanjiChoices[i].sprite = Resources.Load<Sprite>("1025版/" + mondai_n_str.ToString() + "_" + targetKanji + "_" + i.ToString());
+
+            if (isShuffleChoices){
+                int rnd = Random.Range(0,100);
+                if (rnd % 2 == 0){
+                    KanjiChoices[i].transform.SetAsFirstSibling();
+                }
+            }
         }
 
         question_number_now += 1;

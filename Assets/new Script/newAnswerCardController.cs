@@ -29,9 +29,8 @@ public class newAnswerCardController : MonoBehaviour
         
         //Debug.Log(newGameController.number_of_ok);
 
-        
         //ファイルへの書き込み処理
-        StreamReader reader = new StreamReader(Application.dataPath + "/Json/text.json");
+        StreamReader reader = new StreamReader(Application.dataPath + @"/Resources/Json/text.json");
         string datastr = reader.ReadToEnd();
         reader.Close();
         //var KANJI_SCORES = JsonUtility.FromJson<KanjiSaveData[]>(datastr);
@@ -70,7 +69,7 @@ public class newAnswerCardController : MonoBehaviour
         }
         Debug.Log(tes);
 
-        string filePath = Application.dataPath + "/Json/text.json";
+        string filePath = Application.dataPath + @"/Resources/Json/text.json";
         string json = JsonUtility.ToJson(kanjissavedata, true);
         Debug.Log("json="+ kanjissavedata);
 
