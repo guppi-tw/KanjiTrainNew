@@ -43,8 +43,7 @@ public class newGameController : MonoBehaviour
     public static int number_of_ok = 0;
     //
     //セーブデータ保存処理
-    ///
-    /// 
+
     public GameObject thirdStageButton;
 
     [Header("デバッグ用")]
@@ -57,9 +56,13 @@ public class newGameController : MonoBehaviour
         setSyutudaiKanji();
         makeNewQuestion();
 
-        Debug.Log("day_id: " + day_id);
-        Debug.Log("level_id: " + level_id);
+        //Debug.Log("day_id: " + day_id);
+        //Debug.Log("level_id: " + level_id);
         DayUI.text = day_id.ToString() + "日目"; //何日目か表示する分
+
+        if (level_id == 3){
+            thirdStageButton.SetActive(true);
+        }
     }
 
     void Update()
@@ -96,7 +99,7 @@ public class newGameController : MonoBehaviour
         {
             var j = int.Parse(syutsudaiToday[i]);
             var targetKanji = kanji_Question_Data.param[j].kanji;
-            Debug.Log(targetKanji);
+            //Debug.Log(targetKanji);
         }
     }
 
@@ -115,14 +118,15 @@ public class newGameController : MonoBehaviour
         {
             KanjiTargetImage.sprite = Resources.Load<Sprite>("1025版/" + mondai_n_str.ToString() + "_" + targetKanji + "_0");
             //KanjiTargetImage.sprite = Resources.Load<Sprite>("1025版/"+"33_薄_0");
-            Debug.Log("1025版/" + mondai_n_str.ToString() + "_" + targetKanji + "_0");
+            Debug.Log("1101_level2/" + mondai_n_str.ToString() + "_" + targetKanji + "_9");
             //thirdStageButton.SetActive(false);
         }
         else if (level_id == 2)
         {
             //レベル2用の画像を読み込む
-            KanjiTargetImage.sprite = Resources.Load<Sprite>("1025版/" + mondai_n_str.ToString() + "_" + targetKanji + "_9");
-            Debug.Log("1025版/" + mondai_n_str.ToString() + "_" + targetKanji + "_9");
+            KanjiTargetImage.sprite = Resources.Load<Sprite>("1101_level2/" + mondai_n_str.ToString() + "_" + targetKanji + "_9");
+            Debug.Log("1101_level2/" + mondai_n_str.ToString() + "_" + targetKanji + "_9");
+            //Debug.Log("1025版/" + mondai_n_str.ToString() + "_" + targetKanji + "_9");
             //var nextbutton = GameObject.Find("レベル3");
             thirdStageButton.SetActive(false);
         }
@@ -147,7 +151,13 @@ public class newGameController : MonoBehaviour
         {
             var filename = targetKanji + "_" + i.ToString();
             //Debug.Log(filename);
-            KanjiChoices[i].sprite = Resources.Load<Sprite>("1025版/" + mondai_n_str.ToString() + "_" + targetKanji + "_" + i.ToString());
+            if (level_id == 1){
+                KanjiChoices[i].sprite = Resources.Load<Sprite>("1025版/" + mondai_n_str.ToString() + "_" + targetKanji + "_" + i.ToString());
+            }else{
+                KanjiChoices[i].sprite = Resources.Load<Sprite>("1101_level2/" + mondai_n_str.ToString() + "_" + targetKanji + "_" + i.ToString());
+                Debug.Log("1101_level2/" + mondai_n_str.ToString() + "_" + targetKanji + "_" + i.ToString());
+            }
+            
 
             if (isShuffleChoices){
                 int rnd = Random.Range(0,100);
