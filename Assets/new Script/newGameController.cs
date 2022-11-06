@@ -147,7 +147,30 @@ public class newGameController : MonoBehaviour
         
         //KanjiReibunUI.text = kanji_Question_Data.param[section_id].example;
         
-        for (int i = 0; i < 4; i++)
+        List<int> q_nums = new List<int>(){0,1,2,3};
+        if (isShuffleChoices == true){
+            int i = 0;
+            //Debug.Log(i);
+            
+            while (i <= 3){
+            int count_index = Random.Range(0, q_nums.Count);
+            //Debug.Log(count);
+
+            if (level_id == 1){
+                KanjiChoices[i].sprite = Resources.Load<Sprite>("1025版/" + mondai_n_str.ToString() + "_" + targetKanji + "_" + q_nums[count_index].ToString());
+            }else{
+                KanjiChoices[i].sprite = Resources.Load<Sprite>("1101_level2/" + mondai_n_str.ToString() + "_" + targetKanji + "_" + q_nums[count_index].ToString());
+                //Debug.Log("1101_level2/" + mondai_n_str.ToString() + "_" + targetKanji + "_" + i.ToString());
+            }
+
+            q_nums.RemoveAt(count_index);
+            i++;
+            }
+
+
+            }
+        else{ //シャッフルを使用しない場合
+            for (int i = 0; i < 4; i++)
         {
             var filename = targetKanji + "_" + i.ToString();
             //Debug.Log(filename);
@@ -158,14 +181,9 @@ public class newGameController : MonoBehaviour
                 Debug.Log("1101_level2/" + mondai_n_str.ToString() + "_" + targetKanji + "_" + i.ToString());
             }
             
-
-            if (isShuffleChoices){
-                int rnd = Random.Range(0,100);
-                if (rnd % 2 == 0){
-                    KanjiChoices[i].transform.SetAsFirstSibling();
-                }
-            }
         }
+
+            }
 
         question_number_now += 1;
 

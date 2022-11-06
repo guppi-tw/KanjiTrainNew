@@ -85,10 +85,13 @@ public class SaveDataLoader : MonoBehaviour
             }
 
         string json = JsonUtility.ToJson(save, true);
+        
         ES3.Save<string>("KANJI_SCORE", json);
         //Debug.Log("save処理が実行");
 
         var kanji_item = save.item;
+
+
         for (int i = 0; i < 60; i ++){
             text_to_display += " id " + i.ToString();
             text_to_display += " " +  kanji_Question_Data.param[i].kanji;
@@ -98,8 +101,8 @@ public class SaveDataLoader : MonoBehaviour
 
         //datastr = datastr.Replace("\n","").Replace("\r", "").Replace("   "," ");
         Debug.Log(text_to_display);
-        KanjiScoreUI.text = text_to_display;
 
+        KanjiScoreUI.text = text_to_display;
     }
 
     }
