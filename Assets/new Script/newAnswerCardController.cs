@@ -16,6 +16,9 @@ public class newAnswerCardController : MonoBehaviour
     public AudioClip FALSEsound;
     public AudioSource audioSource;
 
+
+    public GameObject thirdButton;
+
     public void pushChoiceButton(){
         var image = this.gameObject.GetComponent<Image>();
         string imgName = image.sprite.name;
@@ -62,23 +65,22 @@ public class newAnswerCardController : MonoBehaviour
             newGameController.makeNewQuestion(); 
         }
 
+        try{
+            thirdButton.SetActive(false);
+        }catch{
+            
+        }
+
         string tes = null;
         for (int i = 0; i< newGameController.syutsudaiToday.Count; i++){
             tes += newGameController.syutsudaiToday[i] + " ";
         }
-        //Debug.Log(tes);
-
-        //
         //string filePath = Application.dataPath + @"/Resources/Json/text.json";
         string json = JsonUtility.ToJson(kanjissavedata, true);
         //Debug.Log("json="+ kanjissavedata);
 
         ES3.Save<string>("KANJI_SCORE", json);
 
-        // StreamWriter streamWriter = new StreamWriter(filePath);
-        // streamWriter.Write(json);
-        // streamWriter.Flush();
-        // streamWriter.Close();
     }
 
     public class KanjisSaveData{

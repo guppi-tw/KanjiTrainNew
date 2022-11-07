@@ -11,7 +11,7 @@ public class newGameController : MonoBehaviour
 
     [Header("共通")]
     public static int day_id = newButtonController.selected_day_id; //n日目の分か、
-    public static int level_id = 1; //stageのレベル。
+    public static int level_id = 3; //stageのレベル。
 
     //[Range(1,3)]  public int day_id_set = 1;
     //[Range(1,3)]  public int level_id_set = 3;
@@ -45,13 +45,14 @@ public class newGameController : MonoBehaviour
     //セーブデータ保存処理
 
     public GameObject thirdStageButton;
+    public GameObject thirdDisplayKanjiButton;
 
     [Header("デバッグ用")]
     public bool isShuffleChoices = false;
 
     void Start()
     {
-        //ebug.Log("Startが実行");
+        
         day_id = newButtonController.selected_day_id;
         setSyutudaiKanji();
         makeNewQuestion();
@@ -60,9 +61,6 @@ public class newGameController : MonoBehaviour
         //Debug.Log("level_id: " + level_id);
         DayUI.text = day_id.ToString() + "日目"; //何日目か表示する分
 
-        if (level_id == 3){
-            thirdStageButton.SetActive(true);
-        }
     }
 
     void Update()
@@ -132,10 +130,14 @@ public class newGameController : MonoBehaviour
         }
         else if (level_id == 3)
         {
-            KanjiChoiceImages.SetActive(false);
+            KanjiTargetImage.sprite = Resources.Load<Sprite>("1025版/" + mondai_n_str.ToString() + "_" + targetKanji + "_0");
+
+            KanjiChoiceImages.SetActive(false); //選択肢画像を非表示
+            thirdDisplayKanjiButton.SetActive(true);
+
             try
             {
-                KanjiTargetImageGameObject.SetActive(false);
+                KanjiTargetImageGameObject.SetActive(false);//模範解答を非表示
             }
             catch (System.NullReferenceException e)
             {
