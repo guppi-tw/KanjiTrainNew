@@ -43,8 +43,8 @@ public class newAnswerCardController : MonoBehaviour
             //Debug.Log("正解");
             newGameController.number_of_ok += 1;
             audioSource.PlayOneShot(OKsound);
-
             kanjissavedata.item[newGameController.j].n_OK += 1 * (int)Mathf.Pow(1000,(newGameController.level_id -1));
+
 
             if (newGameController.number_of_ok >= 10){
                 Debug.Log("ステージクリア");
@@ -56,13 +56,19 @@ public class newAnswerCardController : MonoBehaviour
         }else{
             //Debug.Log("不正解");
             audioSource.PlayOneShot(FALSEsound);   
+
             kanjissavedata.item[newGameController.j].n_FAIL += 1 * (int)Mathf.Pow(1000,(newGameController.level_id - 1));
             Namearray = imgName.Split('_');
             img_kanjiID = Namearray[0];
             Debug.Log(img_kanjiID);
 
             newGameController.syutsudaiToday.Add(newGameController.j.ToString());//不正解なら不正解リストに値を追加(リストの最後に間違った漢字が追加される)
-            newGameController.makeNewQuestion(); 
+
+            if (newGameController.level_id != 3){
+                StartCoroutine(waitNewQuestion());
+            }else{
+                newGameController.makeNewQuestion();
+            }
         }
 
         try{
@@ -82,6 +88,18 @@ public class newAnswerCardController : MonoBehaviour
         ES3.Save<string>("KANJI_SCORE", json);
 
     }
+    
+
+    private IEnumerator waitNewQuestion(){
+        newGameController.shield.SetActive(true);
+        yield return new WaitForSeconds(2);
+        newGameController.makeNewQuestion();
+    }
+
+
+
+
+
 
     public class KanjisSaveData{
         public KanjiSaveData[] item; 
