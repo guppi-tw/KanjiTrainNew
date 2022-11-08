@@ -18,8 +18,15 @@ public class newAnswerCardController : MonoBehaviour
 
 
     public GameObject thirdButton;
+    public GameObject OK_CIRCLE;
+
+    void start(){
+        OK_CIRCLE = transform.Find("circle-9").gameObject;
+    }
 
     public void pushChoiceButton(){
+        newGameController.isSaiten_now = true; //強調機能用のフラグ
+
         var image = this.gameObject.GetComponent<Image>();
         string imgName = image.sprite.name;
         string[] Namearray = imgName.Split('_');
@@ -32,19 +39,18 @@ public class newAnswerCardController : MonoBehaviour
         //Debug.Log(newGameController.number_of_ok);
 
         //ファイルへの書き込み処理
-        //StreamReader reader = new StreamReader(Application.dataPath + @"/Resources/Json/text.json");
         string datastr = ES3.Load<string>("KANJI_SCORE");
-        //reader.Close();
-        //var KANJI_SCORES = JsonUtility.FromJson<KanjiSaveData[]>(datastr);
         KanjisSaveData kanjissavedata = JsonUtility.FromJson<KanjisSaveData>(datastr);
-        //読み込み    
+        //読み込み
+        if (newGameController.level_id == 2){
+            newGameController.KanjiTargetImage.sprite = Resources.Load<Sprite>("1025版/" + newGameController.mondai_n_str.ToString() + "_" + newGameController.targetKanji + "_0");
+        }    
 
         if (imgNamelast == (char)0){
             //Debug.Log("正解");
             newGameController.number_of_ok += 1;
             audioSource.PlayOneShot(OKsound);
             kanjissavedata.item[newGameController.j].n_OK += 1 * (int)Mathf.Pow(1000,(newGameController.level_id -1));
-
 
             if (newGameController.number_of_ok >= 10){
                 Debug.Log("ステージクリア");
@@ -56,7 +62,6 @@ public class newAnswerCardController : MonoBehaviour
         }else{
             //Debug.Log("不正解");
             audioSource.PlayOneShot(FALSEsound);   
-
             kanjissavedata.item[newGameController.j].n_FAIL += 1 * (int)Mathf.Pow(1000,(newGameController.level_id - 1));
             Namearray = imgName.Split('_');
             img_kanjiID = Namearray[0];
@@ -69,6 +74,7 @@ public class newAnswerCardController : MonoBehaviour
             }else{
                 newGameController.makeNewQuestion();
             }
+
         }
 
         try{
@@ -83,8 +89,6 @@ public class newAnswerCardController : MonoBehaviour
         }
         //string filePath = Application.dataPath + @"/Resources/Json/text.json";
         string json = JsonUtility.ToJson(kanjissavedata, true);
-        //Debug.Log("json="+ kanjissavedata);
-
         ES3.Save<string>("KANJI_SCORE", json);
 
     }
@@ -92,7 +96,7 @@ public class newAnswerCardController : MonoBehaviour
 
     private IEnumerator waitNewQuestion(){
         newGameController.shield.SetActive(true);
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(5);
         newGameController.makeNewQuestion();
     }
 

@@ -11,7 +11,7 @@ public class newGameController : MonoBehaviour
 
     [Header("共通")]
     public static int day_id = newButtonController.selected_day_id; //n日目の分か、
-    public static int level_id = 1; //stageのレベル。
+    public static int level_id = 2; //stageのレベル。
 
     //[Range(1,3)]  public int day_id_set = 1;
     //[Range(1,3)]  public int level_id_set = 3;
@@ -52,6 +52,8 @@ public class newGameController : MonoBehaviour
 
     [Header("一時的に操作を無効にするためのパーツ") ]
     public GameObject shield;
+
+    public static bool isSaiten_now = false;
 
     void Start()
     {
@@ -106,16 +108,21 @@ public class newGameController : MonoBehaviour
 
 
     public static int j;
+
+    public static int mondai_n_str;
+    public static string targetKanji;
+
+
     public void makeNewQuestion()
     {
+        isSaiten_now = false;
         shield.SetActive(false);
-
         //Debug.Log("mekenuewquestionが呼ばれました");
         j = int.Parse(syutsudaiToday[question_number_now]); //jはユニークの漢字ID
-        var targetKanji = kanji_Question_Data.param[j].kanji;
+        targetKanji = kanji_Question_Data.param[j].kanji; //もともとvar
         //Debug.Log("target漢字="+targetKanji);
 
-        var mondai_n_str = j + 1; //index調整
+        mondai_n_str = j + 1; //index調整
 
         if (level_id == 1)
         {
