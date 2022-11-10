@@ -19,7 +19,7 @@ public class textController : MonoBehaviour
             res = id_list.Length.ToString() + " \n";
             for (int i = 0; i < id_list.Length; i++)
             {
-                if (i % 10 == 0 && i != 0)
+                if (i % 6 == 0 && i != 0)
                 {
                     res += "\n";
                 }

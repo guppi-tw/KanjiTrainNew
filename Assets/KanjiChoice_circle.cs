@@ -15,9 +15,15 @@ public class KanjiChoice_circle : MonoBehaviour
     void Start()
     {
         //circle.SetActive(true);
-         imgName = img.sprite.name;
-         imgNamelast = int.Parse(imgName[imgName.Length-1].ToString());
          //Debug.Log(imgName+" : "+imgNamelast);
+         //circle = transform.Find("circle").gameObject;
+         update_img_name();
+    }
+
+
+    public void update_img_name(){
+        imgName = img.sprite.name;
+        imgNamelast = int.Parse(imgName[imgName.Length-1].ToString());
     }
 
     // Update is called once per frame
@@ -26,11 +32,11 @@ public class KanjiChoice_circle : MonoBehaviour
         if (newGameController.isSaiten_now == true){
             if (imgNamelast == (char)0){
                 circle.SetActive(true);
-                //Debug.Log(imgName);
+                Debug.Log(imgName +":"+imgNamelast);
             }
         }else{
             circle.SetActive(false);
+            update_img_name();
         }
-
     }
 }

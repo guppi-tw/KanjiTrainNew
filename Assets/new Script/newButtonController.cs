@@ -26,6 +26,15 @@ public class newButtonController : MonoBehaviour
     public void toNewStageSelect()
     {
         shokika();
+        
+        string[] input_kanji_list;
+        var input_kanji_string_d = "0,9,10,11,20,21,26,31,34,36,38,42,47,51,52,55,56,58";
+        input_kanji_list = input_kanji_string_d.Split(',');
+        ES3.Save<string>("questionText", input_kanji_string_d);
+        ES3.Save<string[]>("question_hairetsu", input_kanji_list);
+        Debug.Log("問題リストが初期化"+ input_kanji_string_d);
+
+
         if (System.IO.File.Exists(Application.persistentDataPath + "/Json/text.json")){
             Debug.Log("漢字データが設定されていません。");
         }else{
@@ -74,32 +83,33 @@ public class newButtonController : MonoBehaviour
         Debug.Log(input_kanji_list.Length);
 
 
-
         if (input_kanji_list.Length == 1)
         {
             Debug.Log("空欄のため、初期値がセットされました");
-            var input_kanji_string_d = "0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29";
+            //var input_kanji_string_d = "0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29";
+            var input_kanji_string_d = "0,9,10,11,20,21,26,31,34,36,38,42,47,51,52,55,56,58";
+
             input_kanji_list = input_kanji_string_d.Split(',');
             ES3.Save<string>("questionText", input.text);
             ES3.Save<string[]>("question_hairetsu", input_kanji_list);
+
             //string[] default_kanji_list = new <string>{"0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30"};
 
-
         }
-        else if (input_kanji_list.Length != 30)
+        else if (input_kanji_list.Length != 18)
         {
-            Debug.Log("要素が30個ではありません");
+            Debug.Log("要素が18個ではありません");
         }
         else
         {
-            Debug.Log("30個の要素が入力されました。");
+            Debug.Log("18個の要素が入力されました。");
             Debug.Log(ES3.Load<string>("questionText"));
 
             string[] id_list = ES3.Load<string[]>("question_hairetsu");
             res = id_list.Length.ToString() + " \n";
             for (int i = 0; i < id_list.Length; i++)
             {
-                if (i % 10 == 0 && i != 0)
+                if (i % 6 == 0 && i != 0)
                 {
                     res += "\n";
                 }

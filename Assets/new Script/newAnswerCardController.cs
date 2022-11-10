@@ -4,10 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.IO;
+using System.Linq;
+
 
 public class newAnswerCardController : MonoBehaviour
 {
-
     [SerializeField]
     newGameController newGameController;
 
@@ -24,24 +25,27 @@ public class newAnswerCardController : MonoBehaviour
         OK_CIRCLE = transform.Find("circle-9").gameObject;
     }
 
-    public void pushChoiceButton(){
-        newGameController.isSaiten_now = true; //強調機能用のフラグ
 
+    public int n_shume = 1;
+    //public Text n_shu_UI;
+
+    public void pushChoiceButton(){
+        string targetKanji_cash = newGameController.targetKanji;
+
+        newGameController.isSaiten_now = true; //強調機能用のフラグ
         var image = this.gameObject.GetComponent<Image>();
         string imgName = image.sprite.name;
         string[] Namearray = imgName.Split('_');
-        //Debug.Log(Namearray);
         string img_kanjiID= (int.Parse(Namearray[0]) - 1).ToString();
 
         var imgNamefirst = imgName[0].ToString();
         var imgNamelast = int.Parse(imgName[imgName.Length-1].ToString());
         
-        //Debug.Log(newGameController.number_of_ok);
 
         //ファイルへの書き込み処理
         string datastr = ES3.Load<string>("KANJI_SCORE");
         KanjisSaveData kanjissavedata = JsonUtility.FromJson<KanjisSaveData>(datastr);
-        //読み込み
+
         if (newGameController.level_id == 2){
             newGameController.KanjiTargetImage.sprite = Resources.Load<Sprite>("1025版/" + newGameController.mondai_n_str.ToString() + "_" + newGameController.targetKanji + "_0");
         }    
@@ -52,10 +56,12 @@ public class newAnswerCardController : MonoBehaviour
             audioSource.PlayOneShot(OKsound);
             kanjissavedata.item[newGameController.j].n_OK += 1 * (int)Mathf.Pow(1000,(newGameController.level_id -1));
 
-            if (newGameController.number_of_ok >= 10){
+            if (newGameController.number_of_ok >= 6){
                 Debug.Log("ステージクリア");
+                StartCoroutine(waitOneSecond());
                 SceneManager.LoadScene("NewClearSCene");
             }else{
+                StartCoroutine(waitOneSecond());
                 newGameController.makeNewQuestion();
             }
             
@@ -65,8 +71,6 @@ public class newAnswerCardController : MonoBehaviour
             kanjissavedata.item[newGameController.j].n_FAIL += 1 * (int)Mathf.Pow(1000,(newGameController.level_id - 1));
             Namearray = imgName.Split('_');
             img_kanjiID = Namearray[0];
-            Debug.Log(img_kanjiID);
-
             newGameController.syutsudaiToday.Add(newGameController.j.ToString());//不正解なら不正解リストに値を追加(リストの最後に間違った漢字が追加される)
 
             if (newGameController.level_id != 3){
@@ -76,6 +80,17 @@ public class newAnswerCardController : MonoBehaviour
             }
 
         }
+
+        //Debug.Log(newGameController.LastKanji + targetKanji_cash);
+
+        if (newGameController.LastKanji == targetKanji_cash && newGameController.level_id == 3){
+            n_syumeController.n_shu += 1;
+            Debug.Log(n_syumeController.n_shu);
+
+            newGameController.N_shume_obj.SetActive(true);
+            newGameController.LastKanji = newGameController.kanji_Question_Data.param[int.Parse(newGameController.syutsudaiToday[newGameController.syutsudaiToday.Count - 1])].kanji;
+        }
+
 
         try{
             thirdButton.SetActive(false);
@@ -99,6 +114,13 @@ public class newAnswerCardController : MonoBehaviour
         yield return new WaitForSeconds(5);
         newGameController.makeNewQuestion();
     }
+
+    private IEnumerator waitOneSecond(){
+        
+        yield return new WaitForSeconds(2);
+    }
+
+    
 
 
 

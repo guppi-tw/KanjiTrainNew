@@ -8,10 +8,9 @@ using System.IO;
 
 public class newGameController : MonoBehaviour
 {
-
     [Header("共通")]
     public static int day_id = newButtonController.selected_day_id; //n日目の分か、
-    public static int level_id = 2; //stageのレベル。
+    public static int level_id = 1; //stageのレベル。
 
     //[Range(1,3)]  public int day_id_set = 1;
     //[Range(1,3)]  public int level_id_set = 3;
@@ -55,17 +54,16 @@ public class newGameController : MonoBehaviour
 
     public static bool isSaiten_now = false;
 
+     [Header("ｎ週目かの表示用") ]
+    public static int N_shume = 1; //回答が何周目かカウントするための変数
+    public GameObject N_shume_obj;
+
     void Start()
-    {
-        
+    {        
         day_id = newButtonController.selected_day_id;
         setSyutudaiKanji();
         makeNewQuestion();
-
-        //Debug.Log("day_id: " + day_id);
-        //Debug.Log("level_id: " + level_id);
         DayUI.text = day_id.ToString() + "日目"; //何日目か表示する分
-
     }
 
     void Update()
@@ -76,29 +74,34 @@ public class newGameController : MonoBehaviour
     }
 
 
+    public static string LastKanji;
+
     public void setSyutudaiKanji()
     {//一日分の出題する漢字をセットする
         //List<string> syutudaiKanji = new List<string>(); //要素30のstringリスト
+
         syutudaiKanji.AddRange(ES3.Load<string[]>("question_hairetsu"));
-        syutsudaiToday = syutudaiKanji.GetRange(0, 10);
+        syutsudaiToday = syutudaiKanji.GetRange(0, 6);
 
         if (day_id == 1)
         {
-            syutsudaiToday = syutudaiKanji.GetRange(0, 10);
+            syutsudaiToday = syutudaiKanji.GetRange(0, 6);
             Debug.Log("1日目");
         }
         else if (day_id == 2)
         {
-            syutsudaiToday = syutudaiKanji.GetRange(10, 10);
+            syutsudaiToday = syutudaiKanji.GetRange(6, 6);
             Debug.Log("2日目");
         }
         else if (day_id == 3)
         {
-            syutsudaiToday = syutudaiKanji.GetRange(20, 10);
+            syutsudaiToday = syutudaiKanji.GetRange(12, 6);
             Debug.Log("3日目");
         }
 
-        for (int i = 0; i < 10; i++)
+        LastKanji = kanji_Question_Data.param[int.Parse(syutsudaiToday[syutsudaiToday.Count - 1])].kanji;
+
+        for (int i = 0; i < 6; i++)
         {
             var j = int.Parse(syutsudaiToday[i]);
             var targetKanji = kanji_Question_Data.param[j].kanji;
@@ -108,10 +111,8 @@ public class newGameController : MonoBehaviour
 
 
     public static int j;
-
     public static int mondai_n_str;
     public static string targetKanji;
-
 
     public void makeNewQuestion()
     {
@@ -128,14 +129,14 @@ public class newGameController : MonoBehaviour
         {
             KanjiTargetImage.sprite = Resources.Load<Sprite>("1025版/" + mondai_n_str.ToString() + "_" + targetKanji + "_0");
             //KanjiTargetImage.sprite = Resources.Load<Sprite>("1025版/"+"33_薄_0");
-            Debug.Log("1101_level2/" + mondai_n_str.ToString() + "_" + targetKanji + "_9");
+            //Debug.Log("1101_level2/" + mondai_n_str.ToString() + "_" + targetKanji + "_9");
             //thirdStageButton.SetActive(false);
         }
         else if (level_id == 2)
         {
             //レベル2用の画像を読み込む
             KanjiTargetImage.sprite = Resources.Load<Sprite>("1101_level2/" + mondai_n_str.ToString() + "_" + targetKanji + "_9");
-            Debug.Log("1101_level2/" + mondai_n_str.ToString() + "_" + targetKanji + "_9");
+            //Debug.Log("1101_level2/" + mondai_n_str.ToString() + "_" + targetKanji + "_9");
             //Debug.Log("1025版/" + mondai_n_str.ToString() + "_" + targetKanji + "_9");
             //var nextbutton = GameObject.Find("レベル3");
             thirdStageButton.SetActive(false);
@@ -143,7 +144,6 @@ public class newGameController : MonoBehaviour
         else if (level_id == 3)
         {
             KanjiTargetImage.sprite = Resources.Load<Sprite>("1025版/" + mondai_n_str.ToString() + "_" + targetKanji + "_0");
-
             KanjiChoiceImages.SetActive(false); //選択肢画像を非表示
             thirdDisplayKanjiButton.SetActive(true);
 
@@ -192,10 +192,11 @@ public class newGameController : MonoBehaviour
                 KanjiChoices[i].sprite = Resources.Load<Sprite>("1025版/" + mondai_n_str.ToString() + "_" + targetKanji + "_" + i.ToString());
             }else{
                 KanjiChoices[i].sprite = Resources.Load<Sprite>("1101_level2/" + mondai_n_str.ToString() + "_" + targetKanji + "_" + i.ToString());
-                Debug.Log("1101_level2/" + mondai_n_str.ToString() + "_" + targetKanji + "_" + i.ToString());
+                //Debug.Log("1101_level2/" + mondai_n_str.ToString() + "_" + targetKanji + "_" + i.ToString());
             }
             
         }
+
 
             }
 
