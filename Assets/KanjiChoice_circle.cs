@@ -20,7 +20,6 @@ public class KanjiChoice_circle : MonoBehaviour
          update_img_name();
     }
 
-
     public void update_img_name(){
         imgName = img.sprite.name;
         imgNamelast = int.Parse(imgName[imgName.Length-1].ToString());
