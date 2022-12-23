@@ -56,7 +56,7 @@ public class newAnswerCardController : MonoBehaviour
             audioSource.PlayOneShot(OKsound);
             kanjissavedata.item[newGameController.j].n_OK += 1 * (int)Mathf.Pow(1000,(newGameController.level_id -1));
 
-            if (newGameController.number_of_ok >= 6){
+            if (newGameController.number_of_ok >= 5){
                 Debug.Log("ステージクリア");
                 StartCoroutine(waitOneSecond());
                 SceneManager.LoadScene("NewClearSCene");
@@ -111,7 +111,7 @@ public class newAnswerCardController : MonoBehaviour
 
     private IEnumerator waitNewQuestion(){
         newGameController.shield.SetActive(true);
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(3);
         newGameController.makeNewQuestion();
     }
 

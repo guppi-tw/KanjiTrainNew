@@ -10,7 +10,7 @@ public class newGameController : MonoBehaviour
 {
     [Header("共通")]
     public static int day_id = newButtonController.selected_day_id; //n日目の分か、
-    public static int level_id = 2; //stageのレベル。
+    public static int level_id = 1; //stageのレベル。
 
     //[Range(1,3)]  public int day_id_set = 1;
     //[Range(1,3)]  public int level_id_set = 3;
@@ -87,12 +87,12 @@ public class newGameController : MonoBehaviour
 
         if (day_id == 1)
         {
-            syutsudaiToday = syutudaiKanji.GetRange(0, 6);
+            syutsudaiToday = syutudaiKanji.GetRange(0, 5);
             Debug.Log("1日目");
         }
         else if (day_id == 2)
         {
-            syutsudaiToday = syutudaiKanji.GetRange(6, 6);
+            syutsudaiToday = syutudaiKanji.GetRange(0,5);
             Debug.Log("2日目");
         }
         else if (day_id == 3)
@@ -103,7 +103,7 @@ public class newGameController : MonoBehaviour
 
         LastKanji = kanji_Question_Data.param[int.Parse(syutsudaiToday[syutsudaiToday.Count - 1])].kanji;
 
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 5; i++)
         {
             var j = int.Parse(syutsudaiToday[i]);
             var targetKanji = kanji_Question_Data.param[j].kanji;
